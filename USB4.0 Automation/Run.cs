@@ -958,8 +958,15 @@ namespace USB4._0_Automation
             //p.StartInfo.Arguments = parameter;
             p.Start();
             p.StandardInput.WriteLine(parameter);
-
-            Thread.Sleep(10000);
+            if (test18.Checked || test19.Checked)
+            {
+                Thread.Sleep(10000);
+            }
+            else
+            {
+                Thread.Sleep(3500);
+            }
+            
             this.Invoke((MethodInvoker)delegate ()
             {
                 Read_Result_1();
