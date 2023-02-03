@@ -845,7 +845,7 @@ namespace USB4._0_Automation
             }
             else if (!(Trace3_parameter == "\"Tdd21\"\n" || Trace3_parameter == "\"T21\"\n"))
             {
-                mbSession_E5071C_tdr.RawIO.Write(":CALC1:DEV DIF2");
+               // mbSession_E5071C_tdr.RawIO.Write(":CALC1:DEV DIF2");
                 TDR_wait_done("*OPC?");
             }
             else if (!(Trace7_parameter == "\"Tdd12\"\n" || Trace7_parameter == "\"T43\"\n"))
