@@ -948,10 +948,13 @@ namespace USB4._0_Automation
                 {
                     mbSession_E5071C.RawIO.Write(":DISP:WIND1:ACT");  //設定左邊視窗為啟動的
                     mbSession_E5071C.RawIO.Write(":DISP:WIND1:MAX OFF");
-                    mbSession_E5071C_tdr.RawIO.Write(":CALC:ATR:ACT 3");
+                    //mbSession_E5071C_tdr.RawIO.Write(":CALC:ATR:ACT 3");
 
                     TDR_Query_response_value(":CALC1:TRAC3:PAR?", "\"Tdd21\"\n");                                   //TDR/TDT --> Parameters
                     TDR_Query_response_value(":CALC1:TRAC3:FORM?", "VOLT\n");                                        //TDR/TDT --> Parameters --> Format
+                    mbSession_E5071C.RawIO.Write(":CALC1:PAR3:SEL");
+                   // mbSession_E5071C_tdr.RawIO.Write(":CALC1:MARK2 OFF");
+                    mbSession_E5071C.RawIO.Write(":CALC1:MARK2 OFF");
 
                     mbSession_E5071C_tdr.RawIO.Write(":CALC:TRAC1:TIME:STEP:RTIM:THR T2_8");                          //TDR/TDT --> Rise Time --> 20%-80%
                     mbSession_E5071C_tdr.RawIO.Write(":CALC:TRAC1:TIME:STEP:RTIM:DATA 400e-12");                      //TDR/TDT --> Rise Time --> 400p Sec
@@ -959,6 +962,7 @@ namespace USB4._0_Automation
                     mbSession_E5071C_tdr.RawIO.Write(":CALC:TRAC5:TIME:STEP:RTIM:THR T2_8");                          //TDR/TDT --> Rise Time --> 20%-80%
                     mbSession_E5071C_tdr.RawIO.Write(":CALC:TRAC5:TIME:STEP:RTIM:DATA 400e-12");                      //TDR/TDT --> Rise Time --> 400p Sec
 
+                    
                 }
                 else  // 修正SS的BUG    kevin 20230204_1941 BUG FIXED SS
                 {
