@@ -662,179 +662,7 @@ namespace USB4._0_Automation
             }
 
         }
-        void TDR_ENV_SET_DD()   // Kevin add for DD Use   2023/1/30 -S
-        {
-
-            check_DIF2_ENV();
-            TDR_Query_response_value(":CALC1:ATR:MARK:COUP?", "0\n");
-            TDR_Query_response_value(":CALC1:ATR:TIME:COUP?", "0\n");
-
-            mbSession_E5071C.RawIO.Write(":CALC1:FSIM:STAT ON");                                           //Analysis --> fixture simulator --> Fixture Simulator(ON)
-            mbSession_E5071C.RawIO.Write(":CALC1:FSIM:BAL:DEV BBAL");                                      //Analysis --> fixture simulator --> Topology -> Device(Bal-Bal)
-            mbSession_E5071C.RawIO.Write(":CALC1:FSIM:BAL:TOP:BBAL 1,3,2,4");                              //Analysis --> fixture simulator --> Topology --> Port1(1-3) & Port2(2-4) 
-            mbSession_E5071C.RawIO.Write(":CALC1:FSIM:BAL:PAR1:STAT ON");                                  //Analysis --> fixture simulator --> BalUn(OM)
-            mbSession_E5071C.RawIO.Write(":CALC1:FSIM:BAL:PAR1:BBAL SDD21");
-
-
-            wait_done("*OPC?");
-
-            mbSession_E5071C.RawIO.Write(":CALC1:PAR:COUN 10");
-
-            mbSession_E5071C_tdr.RawIO.Write(":SENS:DLEN:DATA 80e-10");//TDR/TDT > DUT Length
-            mbSession_E5071C_tdr.RawIO.Write(":CALC1:TRAC1:TIME:STEP:RTIM:DATA 400e-12");
-            //確認Trace1和Trace5 是否為Tdd11 和 Tdd22
-
-            //setting  Trace1 和 Trace5
-            TDR_Query_response_value(":CALC1:TRAC1:PAR?", "\"Tdd11\"\n");                                   //TDR/TDT --> Parameters
-            TDR_Query_response_value(":CALC1:TRAC1:FORM?", "IMP\n");                                        //TDR/TDT --> Parameters --> Format
-            TDR_Query_response_value(":CALC1:TRAC5:PAR?", "\"Tdd22\"\n");                                   //TDR/TDT --> Parameters
-            TDR_Query_response_value(":CALC1:TRAC5:FORM?", "IMP\n");                                        //TDR/TDT --> Parameters --> Format
-
-            //setting  Trace2 和 Trace6
-            TDR_Query_response_value(":CALC1:TRAC2:PAR?", "\"T21\"\n");                                   //TDR/TDT --> Parameters
-            TDR_Query_response_value(":CALC1:TRAC2:FORM?", "VOLT\n");                                        //TDR/TDT --> Parameters --> Format
-            TDR_Query_response_value(":CALC1:TRAC6:PAR?", "\"T43\"\n");                                   //TDR/TDT --> Parameters                                      
-            TDR_Query_response_value(":CALC1:TRAC6:FORM?", "VOLT\n");                                     //TDR/TDT --> Parameters --> Format
-
-            //setting  Trace3 和 Trace7
-            TDR_Query_response_value(":CALC1:TRAC3:PAR?", "\"Tdd21\"\n");                                   //TDR/TDT --> Parameters
-            TDR_Query_response_value(":CALC1:TRAC3:FORM?", "IMP\n");                                        //TDR/TDT --> Parameters --> Format
-
-
-
-
-            TDR_wait_done("*OPC?");
-            wait_done("*OPC?");
-
-
-            //Scal Trace1 和 Trace5
-            mbSession_E5071C_tdr.RawIO.Write(":CALC1:TRAC1:TIME:STEP:RTIM:THR T2_8");
-            mbSession_E5071C_tdr.RawIO.Write(":CALC1:TRAC1:TIME:STEP:RTIM:DATA 400e-12");
-
-            mbSession_E5071C_tdr.RawIO.Write(":CALC1:TRAC5:TIME:STEP:RTIM:THR T2_8");
-            mbSession_E5071C_tdr.RawIO.Write(":CALC1:TRAC5:TIME:STEP:RTIM:DATA 400e-12");
-
-
-            TDR_wait_done("*OPC?");
-
-            //Trace_1  DIV & STAR END
-            mbSession_E5071C_tdr.RawIO.Write(":DISP:TRAC1:X:SCAL:PDIV 300e-11");                           //set value of x-axis scale per division
-            mbSession_E5071C_tdr.RawIO.Write(":DISP:TRAC1:X:SCAL:RLEV -500e-11");                          //set value of x-axis reference line
-            mbSession_E5071C_tdr.RawIO.Write(":DISP:TRAC1:Y:SCAL:PDIV 5");                                 //sets value of Y-axis scale per division
-            mbSession_E5071C_tdr.RawIO.Write(":DISP:TRAC1:Y:SCAL:RLEV 70");
-
-            //Trace_5  DIV & STAR END
-            mbSession_E5071C_tdr.RawIO.Write(":DISP:TRAC5:X:SCAL:PDIV 300e-11");                           //set value of x-axis scale per division
-            mbSession_E5071C_tdr.RawIO.Write(":DISP:TRAC5:X:SCAL:RLEV -500e-11");                          //set value of x-axis reference line
-            mbSession_E5071C_tdr.RawIO.Write(":DISP:TRAC5:Y:SCAL:PDIV 5");                                 //sets value of Y-axis scale per division
-            mbSession_E5071C_tdr.RawIO.Write(":DISP:TRAC5:Y:SCAL:RLEV 70");
-
-
-            //Trace_2  DIV & STAR END
-            mbSession_E5071C_tdr.RawIO.Write(":DISP:TRAC2:X:SCAL:PDIV 500e-11");                           //set value of x-axis scale per division
-            mbSession_E5071C_tdr.RawIO.Write(":DISP:TRAC2:X:SCAL:RLEV -100e-11");                          //set value of x-axis reference line
-            mbSession_E5071C_tdr.RawIO.Write(":DISP:TRAC2:Y:SCAL:PDIV 500e-4");                                 //sets value of Y-axis scale per division
-            mbSession_E5071C_tdr.RawIO.Write(":DISP:TRAC2:Y:SCAL:RLEV 100e-3");
-
-            //Trace_6  DIV & STAR END
-            mbSession_E5071C_tdr.RawIO.Write(":DISP:TRAC6:X:SCAL:PDIV 500e-11");                           //set value of x-axis scale per division
-            mbSession_E5071C_tdr.RawIO.Write(":DISP:TRAC6:X:SCAL:RLEV -100e-11");                          //set value of x-axis reference line
-            mbSession_E5071C_tdr.RawIO.Write(":DISP:TRAC6:Y:SCAL:PDIV 500e-4");                                 //sets value of Y-axis scale per division
-            mbSession_E5071C_tdr.RawIO.Write(":DISP:TRAC6:Y:SCAL:RLEV 100e-3");
-
-            //Trace_3  DIV & STAR END
-            mbSession_E5071C_tdr.RawIO.Write(":DISP:TRAC3:X:SCAL:PDIV 500e-11");                           //set value of x-axis scale per division
-            mbSession_E5071C_tdr.RawIO.Write(":DISP:TRAC3:X:SCAL:RLEV -100e-11");                          //set value of x-axis reference line
-            mbSession_E5071C_tdr.RawIO.Write(":DISP:TRAC3:Y:SCAL:PDIV 100e-3");                                 //sets value of Y-axis scale per division
-            mbSession_E5071C_tdr.RawIO.Write(":DISP:TRAC3:Y:SCAL:RLEV 0");
-
-
-
-            TDR_wait_done("*OPC?");
-
-            // Off BZ
-            mbSession_E5071C.RawIO.Write(":SYST:BEEP:COMP:STAT OFF");
-            mbSession_E5071C.RawIO.Write(":SYST:BEEP:WARN:STAT OFF");
-            //off BZ
-
-            // Tr1、Tr5「IMPEDANCE」
-            //CALC1 Tr1  Import IMP_LIMIT.csv
-            mbSession_E5071C.RawIO.Write(":CALC1:PAR1:SEL");
-            mbSession_E5071C.RawIO.Write(":DISP:WIND1:MAX ON");
-            mbSession_E5071C.RawIO.Write(":MMEM:LOAD:LIM \"D:\\CAMS_Limitline\\IMP_LIMIT_DD_TR15.csv\"");                                                                                //Analysis > Limit Test > Edit Limit Line > Import from CSV File
-            mbSession_E5071C.RawIO.Write(":CALC1:LIM ON");                                                                                                                       //Analysis > Limit Test > Limit Test
-            mbSession_E5071C.RawIO.Write(":CALC1:LIM:DISP ON");                                                                                                                  //Analysis > Limit Test > Limit Line
-            mbSession_E5071C.RawIO.Write(":DISP:FSIG OFF");                                                                                                                       //Analysis > Limit Test > Fail Sign
-            wait_done("*OPC?");
-
-            // CALC1 Tr5  Import IMP_LIMIT.csv
-            mbSession_E5071C.RawIO.Write(":CALC1:PAR5:SEL");
-            mbSession_E5071C.RawIO.Write(":DISP:WIND1:MAX ON");
-            mbSession_E5071C.RawIO.Write(":MMEM:LOAD:LIM \"D:\\CAMS_Limitline\\IMP_LIMIT_DD_TR15.csv\"");                                                                                     //Analysis > Limit Test > Edit Limit Line > Import from CSV File
-            mbSession_E5071C.RawIO.Write(":CALC1:LIM ON");                                                                                                                       //Analysis > Limit Test > Limit Test
-            mbSession_E5071C.RawIO.Write(":CALC1:LIM:DISP ON");                                                                                                                  //Analysis > Limit Test > Limit Line
-            mbSession_E5071C.RawIO.Write(":DISP:FSIG OFF");
-            wait_done("*OPC?");
-
-            //MARK1 Setting
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK1 ON");                                               //2022/09/21 Kevin add for --->	這一行是先選擇MARK1
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK1: FUNC:TYPE MAX");                                   //2022/09/21 Kevin add for --->	這一行是將 MARK1 設定為 MAX
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK1:FUNC:TRAC ON");                                     //2022/09/21 Kevin add for --->	這一行是將MARK1設定為追蹤
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM ON");                                       //2022/09/21 Kevin add for --->	這一行是設定Search Range(ON)
-
-            //MARK2 Setting
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK2 ON");                                               //2022/09/21 Kevin add for --->	這一行是先選擇MARK1
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK2: FUNC:TYPE MIN");                                   //2022/09/21 Kevin add for --->	這一行是將 MARK1 設定為 MAX
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK2:FUNC:TRAC ON");                                     //2022/09/21 Kevin add for --->	這一行是將MARK1設定為追蹤
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM ON");                                       //2022/09/21 Kevin add for --->	這一行是設定Search Range(ON)
-
-            //Tr2、Tr6 「SKEW」
-            mbSession_E5071C.RawIO.Write(":CALC1:ATR:ACT 2");                                               //2022/09/21 Kevin add for ---> 這段是設定起始為 Tr2
-            mbSession_E5071C.RawIO.Write(":CALC:TRAC2:DTIM:STAT ON");                                       //2022/09/21 Kevin add for ---> 這段有可能是將delta time 按鈕勾選起來
-            mbSession_E5071C.RawIO.Write(":CALC:TRAC2:DTIM:TARG 6");                                        //2022/09/21 Kevin add for ---> 這一段是設定 Tr2 及 Tr6 作相減
-            mbSession_E5071C.RawIO.Write(":CALC:TRAC2:DTIM:POS 50");                                        //2022/09/21 Kevin add for ---> 這一段是設定 position 為50
-            mbSession_E5071C.RawIO.Write(":TRIG:SING");                                                     //2022/09/21 Kevin add for --->	
-            mbSession_E5071C.RawIO.Write(":CALC:TRAC2:DTIM:DATA?");                                         //2022/09/21 Kevin add for --->	//:CALCulate:TRACe{Tr}:DTIMe:DATA  //This command gets delta time result value. You can get the result even if :CALCulate:TRACe{Tr}:DTIMe:STATe is off.
-
-            mbSession_E5071C.RawIO.Write(":DISP:WIND1:MAX ON");
-            mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1 ON");
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM OFF");
-            mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:TRAC ON");                                   //MKR/ANALYSIS --> Marker Search --> Track(on)
-            mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:TYPE TARG");                                 //MKR/ANALYSIS --> Marker Search --> Search Target
-            mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:TARG 200e-3");                               //MKR/ANALYSIS --> Marker Search --> Target value
-            wait_done("*OPC?");
-
-
-            //以下作TR2 及TR6的公式設定
-            mbSession_E5071C.RawIO.Write(":SYST:BEEP:COMP:STAT OFF");
-            mbSession_E5071C.RawIO.Write(":SYST:BEEP:WARN:STAT OFF");
-
-            mbSession_E5071C_tdr.RawIO.Write(":CALC:ATR:ACT 2");
-            mbSession_E5071C_tdr.RawIO.Write(":DISP:TRAC2:X:SCAL:RLEV -3e-9");
-            TDR_wait_done("*OPC?");
-
-            mbSession_E5071C.RawIO.Write(":DISP:WIND1:MAX ON");
-            mbSession_E5071C.RawIO.Write(":CALC1:SELected:EQUation:STATE ON");
-            mbSession_E5071C.RawIO.Write(":CALC1:SELected:EQUation:TEXT \"S21-S41\"");
-            wait_done("*OPC?");
-
-            mbSession_E5071C_tdr.RawIO.Write(":CALC:ATR:ACT 6");
-            mbSession_E5071C_tdr.RawIO.Write(":DISP:TRAC6:X:SCAL:RLEV -3e-9");
-            TDR_wait_done("*OPC?");
-
-            mbSession_E5071C.RawIO.Write(":CALC1:SELected:EQUation:STATE ON");
-            mbSession_E5071C.RawIO.Write(":CALC1:SELected:EQUation:TEXT \"S43-S23\"");
-            wait_done("*OPC?");
-
-            mbSession_E5071C_tdr.RawIO.Write(":CALC:TRAC2:DTIM:TARG 6");
-            mbSession_E5071C_tdr.RawIO.Write(":CALC:TRAC2:DTIM:STAT ON");
-            TDR_wait_done("*OPC?");
-            Thread.Sleep(2000);
-
-
-
-
-        }   // Kevin add for DD Use   2023/1/30 -E
+        
         void analysis_s4p()
         {
             string para = "demo_code\\demo_code_t.exe";
@@ -1114,6 +942,39 @@ namespace USB4._0_Automation
                 ///
                 mbSession_E5071C.RawIO.Write(":MMEM:LOAD \"D:\\CAMS_STA\\B3\\" + switch_ports + ".STA\"");
                 wait_done("*OPC?");
+
+
+                if (switch_ports == "1F,3F,2F,4F")   //kevin 20230204_1941 BUG FIXED DD
+                {
+                    mbSession_E5071C.RawIO.Write(":DISP:WIND1:ACT");  //設定左邊視窗為啟動的
+                    mbSession_E5071C.RawIO.Write(":DISP:WIND1:MAX OFF");
+                    mbSession_E5071C_tdr.RawIO.Write(":CALC:ATR:ACT 3");
+
+                    TDR_Query_response_value(":CALC1:TRAC3:PAR?", "\"Tdd21\"\n");                                   //TDR/TDT --> Parameters
+                    TDR_Query_response_value(":CALC1:TRAC3:FORM?", "VOLT\n");                                        //TDR/TDT --> Parameters --> Format
+
+                    mbSession_E5071C_tdr.RawIO.Write(":CALC:TRAC1:TIME:STEP:RTIM:THR T2_8");                          //TDR/TDT --> Rise Time --> 20%-80%
+                    mbSession_E5071C_tdr.RawIO.Write(":CALC:TRAC1:TIME:STEP:RTIM:DATA 400e-12");                      //TDR/TDT --> Rise Time --> 400p Sec
+
+                    mbSession_E5071C_tdr.RawIO.Write(":CALC:TRAC5:TIME:STEP:RTIM:THR T2_8");                          //TDR/TDT --> Rise Time --> 20%-80%
+                    mbSession_E5071C_tdr.RawIO.Write(":CALC:TRAC5:TIME:STEP:RTIM:DATA 400e-12");                      //TDR/TDT --> Rise Time --> 400p Sec
+
+                }
+                else  // 修正SS的BUG    kevin 20230204_1941 BUG FIXED SS
+                {
+                    mbSession_E5071C.RawIO.Write(":DISP:WIND1:ACT");  //設定左邊視窗為啟動的
+                    mbSession_E5071C.RawIO.Write(":DISP:WIND1:MAX OFF");
+                    mbSession_E5071C_tdr.RawIO.Write(":CALC:ATR:ACT 1");
+
+
+                    TDR_Query_response_value(":CALC1:TRAC9:PAR?", "\"T22\"\n");                                   //TDR/TDT --> Parameters
+                    TDR_Query_response_value(":CALC1:TRAC9:FORM?", "IMP\n");                                        //TDR/TDT --> Parameters --> Format
+                    TDR_Query_response_value(":CALC1:TRAC10:PAR?", "\"T44\"\n");                                   //TDR/TDT --> Parameters
+                    TDR_Query_response_value(":CALC1:TRAC10:FORM?", "IMP\n");                                        //TDR/TDT --> Parameters --> Format
+
+                }
+                    //kevin 20230204_1941 BUG FIXED DD
+
                 /////    keivn test -s
                 ///
                 //DateTime zero = DateTime.Now;
@@ -1143,7 +1004,8 @@ namespace USB4._0_Automation
                     mbSession_E5071C.RawIO.Write(":DISP:WIND2:MAX OFF");
                     mbSession_E5071C.RawIO.Write(":DISP:WIND1:ACT");
                     mbSession_E5071C.RawIO.Write(":CALC1:PAR1:SEL");
-                    mbSession_E5071C.RawIO.Write(":MMEM:LOAD:LIM \"D:\\CAMS_Limitline\\" + SS_PDI_LL + "\"");
+                    mbSession_E5071C.RawIO.Write(":MMEM:LOAD:LIM \"D:\\CAMS_Limitline\\" + DD_PS_L + "\"");   // //kevin test Limit _20230204_1728
+                    //mbSession_E5071C.RawIO.Write(":MMEM:LOAD:LIM \"D:\\CAMS_Limitline\\IMP_LIMIT_DD_TR15.CSV\"");
                     wait_done("*OPC?");
                     mbSession_E5071C.RawIO.Write(":CALC1:LIM ON");                                                                                                                       //Analysis > Limit Test > Limit Test
                     mbSession_E5071C.RawIO.Write(":CALC1:LIM:DISP ON");                                                                                                                  //Analysis > Limit Test > Limit Line
@@ -1244,7 +1106,8 @@ namespace USB4._0_Automation
                     mbSession_E5071C.RawIO.Write(":DISP:WIND2:MAX OFF");
                     mbSession_E5071C.RawIO.Write(":DISP:WIND1:ACT");
                     mbSession_E5071C.RawIO.Write(":CALC1:PAR1:SEL");
-                    mbSession_E5071C.RawIO.Write(":MMEM:LOAD:LIM \"D:\\CAMS_Limitline\\" + DD_DI_LL + "\"");
+                    mbSession_E5071C.RawIO.Write(":MMEM:LOAD:LIM \"D:\\CAMS_Limitline\\" + DD_DI_LL + "\"");  //kevin test Limit _20230204_1728
+                    //mbSession_E5071C.RawIO.Write(":MMEM:LOAD:LIM \"D:\\CAMS_Limitline\\IMP_LIMIT_DD_TR15.CSV\"");
                     wait_done("*OPC?");
                     mbSession_E5071C.RawIO.Write(":CALC1:LIM ON");                                                                                                                       //Analysis > Limit Test > Limit Test
                     mbSession_E5071C.RawIO.Write(":CALC1:LIM:DISP ON");                                                                                                                  //Analysis > Limit Test > Limit Line
