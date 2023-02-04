@@ -979,37 +979,100 @@ namespace USB4._0_Automation
             mbSession_E5071C.RawIO.Write(":SYST:BEEP:WARN:STAT OFF");
             //off BZ
 
-            //TRACE 1 MARK1 Setting
+
+            ////TRACE 1 MARK1 Setting
+            //mbSession_E5071C.RawIO.Write(":CALC1:PAR1:SEL");
+            //mbSession_E5071C.RawIO.Write(":CALC1:MARK1 ON");  //ok
+            //mbSession_E5071C.RawIO.Write(":CALC1:MARK1:FUNC:TYPE MAX");    //ok                               //2022/09/21 Kevin add for --->	這一行是將 MARK1 設定為 MAX
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC1:MARK1:FUNC:TRAC ON");                                     //2022/09/21 Kevin add for --->	這一行是將MARK1設定為追蹤
+            //mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM ON");                                       //2022/09/21 Kevin add for --->	這一行是設定Search Range(ON)
+            //wait_done("*OPC?");
+
+            ////TRACE 1 MARK2 Setting
+            //mbSession_E5071C.RawIO.Write(":CALC1:MARK2 ON");  //ok
+            //mbSession_E5071C.RawIO.Write(":CALC1:MARK2:FUNC:TYPE MIN");    //ok                               //2022/09/21 Kevin add for --->	這一行是將 MARK1 設定為 MAX
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC1:MARK2:FUNC:TRAC ON");                                     //2022/09/21 Kevin add for --->	這一行是將MARK1設定為追蹤
+            //mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM ON");                                       //2022/09/21 Kevin add for --->	這一行是設定Search Range(ON)
+            //wait_done("*OPC?");
+
+            ////TRACE 5 MARK1 Setting
+            //mbSession_E5071C.RawIO.Write(":CALC1:PAR5:SEL");
+            //mbSession_E5071C.RawIO.Write(":CALC1:MARK1 ON");  //ok
+            //mbSession_E5071C.RawIO.Write(":CALC1:MARK1:FUNC:TYPE MAX");    //ok                               //2022/09/21 Kevin add for --->	這一行是將 MARK1 設定為 MAX
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC5:MARK1:FUNC:TRAC ON");                                     //2022/09/21 Kevin add for --->	這一行是將MARK1設定為追蹤
+            //mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM ON");                                       //2022/09/21 Kevin add for --->	這一行是設定Search Range(ON)
+            //TDR_wait_done("*OPC?");
+
+            ////MARK2 Setting
+            //mbSession_E5071C.RawIO.Write(":CALC1:MARK2 ON");  //ok
+            //mbSession_E5071C.RawIO.Write(":CALC1:MARK2:FUNC:TYPE MIN");    //ok                               //2022/09/21 Kevin add for --->	這一行是將 MARK1 設定為 MAX
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC5:MARK2:FUNC:TRAC ON");                                     //2022/09/21 Kevin add for --->	這一行是將MARK1設定為追蹤
+            //mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM ON");                                       //2022/09/21 Kevin add for --->	這一行是設定Search Range(ON)
+            //TDR_wait_done("*OPC?");
+
+
+            //TRACE 1 MutiSearch MAX
             mbSession_E5071C.RawIO.Write(":CALC1:PAR1:SEL");
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK1 ON");  //ok
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK1:FUNC:TYPE MAX");    //ok                               //2022/09/21 Kevin add for --->	這一行是將 MARK1 設定為 MAX
-            mbSession_E5071C.RawIO.Write(":CALC1:TRAC1:MARK1:FUNC:TRAC ON");                                     //2022/09/21 Kevin add for --->	這一行是將MARK1設定為追蹤
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM ON");                                       //2022/09/21 Kevin add for --->	這一行是設定Search Range(ON)
+            TDR_wait_done("*OPC?");
+            mbSession_E5071C_tdr.RawIO.Write(":CALC1:MARK1:ACT");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC1:MARK1 ON");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC1:MARK1:FUNC:TYPE MAX");
+            wait_done("*OPC?");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC1:MARK1:FUNC:DOM:MULT ON");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC1:MARK1:FUNC:DOM:MULT:RANG 1");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC1:MARK1:FUNC:DOM:MULT:STAR 1,1.5e-9");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC1:MARK1:FUNC:DOM:MULT:STOP 1,3e-9");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC1:MARK1:FUNC:TRAC ON");
+            mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM ON");
+            mbSession_E5071C.RawIO.Write(":CALC1:MARK1:FUNC:EXEC");
             wait_done("*OPC?");
 
-            //TRACE 1 MARK2 Setting
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK2 ON");  //ok
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK2:FUNC:TYPE MIN");    //ok                               //2022/09/21 Kevin add for --->	這一行是將 MARK1 設定為 MAX
-            mbSession_E5071C.RawIO.Write(":CALC1:TRAC1:MARK2:FUNC:TRAC ON");                                     //2022/09/21 Kevin add for --->	這一行是將MARK1設定為追蹤
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM ON");                                       //2022/09/21 Kevin add for --->	這一行是設定Search Range(ON)
-
+            //TRACE 1 MutiSearch Min
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC1:MARK2 ON");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC1:MARK2:FUNC:TYPE MIN");
+            wait_done("*OPC?");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC1:MARK2:FUNC:DOM:MULT ON");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC1:MARK2:FUNC:DOM:MULT:RANG 1");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC1:MARK2:FUNC:DOM:MULT:STAR 1,1.5e-9");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC1:MARK2:FUNC:DOM:MULT:STOP 1,3e-9");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC1:MARK2:FUNC:TRAC ON");
+            mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM ON");
+            mbSession_E5071C.RawIO.Write(":CALC1:MARK2:FUNC:EXEC");
             wait_done("*OPC?");
 
-            //TRACE 1 MARK1 Setting
+
+            //TRACE 5 MutiSearch MAX
             mbSession_E5071C.RawIO.Write(":CALC1:PAR5:SEL");
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK1 ON");  //ok
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK1:FUNC:TYPE MAX");    //ok                               //2022/09/21 Kevin add for --->	這一行是將 MARK1 設定為 MAX
-            mbSession_E5071C.RawIO.Write(":CALC1:TRAC5:MARK1:FUNC:TRAC ON");                                     //2022/09/21 Kevin add for --->	這一行是將MARK1設定為追蹤
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM ON");                                       //2022/09/21 Kevin add for --->	這一行是設定Search Range(ON)
             TDR_wait_done("*OPC?");
+            mbSession_E5071C_tdr.RawIO.Write(":CALC1:MARK1:ACT");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC5:MARK1 ON");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC5:MARK1:FUNC:TYPE MAX");
+            wait_done("*OPC?");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC5:MARK1:FUNC:DOM:MULT ON");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC5:MARK1:FUNC:DOM:MULT:RANG 1");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC5:MARK1:FUNC:DOM:MULT:STAR 1,1.5e-9");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC5:MARK1:FUNC:DOM:MULT:STOP 1,3e-9");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC5:MARK1:FUNC:TRAC ON");
+            mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM ON");
+            mbSession_E5071C.RawIO.Write(":CALC1:MARK1:FUNC:EXEC");
+            wait_done("*OPC?");
+
+            //TRACE 5 MutiSearch Min
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC5:MARK2 ON");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC5:MARK2:FUNC:TYPE MIN");
+            wait_done("*OPC?");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC5:MARK2:FUNC:DOM:MULT ON");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC5:MARK2:FUNC:DOM:MULT:RANG 1");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC5:MARK2:FUNC:DOM:MULT:STAR 1,1.5e-9");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC5:MARK2:FUNC:DOM:MULT:STOP 1,3e-9");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC5:MARK2:FUNC:TRAC ON");
+            mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM ON");
+            mbSession_E5071C.RawIO.Write(":CALC1:MARK2:FUNC:EXEC");
+            wait_done("*OPC?");
 
 
-            //MARK2 Setting
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK2 ON");  //ok
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK2:FUNC:TYPE MIN");    //ok                               //2022/09/21 Kevin add for --->	這一行是將 MARK1 設定為 MAX
-            mbSession_E5071C.RawIO.Write(":CALC1:TRAC5:MARK2:FUNC:TRAC ON");                                     //2022/09/21 Kevin add for --->	這一行是將MARK1設定為追蹤
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM ON");                                       //2022/09/21 Kevin add for --->	這一行是設定Search Range(ON)
-            TDR_wait_done("*OPC?");
+
+
 
 
             //TRACE 2 MARK1 Setting     
@@ -1022,13 +1085,15 @@ namespace USB4._0_Automation
 
 
             ///TRACE 2 MARK2 Setting
-            ///
             mbSession_E5071C.RawIO.Write(":CALC1:MARK2 ON");  //ok
             mbSession_E5071C.RawIO.Write(":CALC1:MARK2:FUNC:TYPE MIN");    //ok                               //2022/09/21 Kevin add for --->	這一行是將 MARK1 設定為 MAX
             mbSession_E5071C.RawIO.Write(":CALC1:TRAC2:MARK2:FUNC:TRAC ON");                                     //2022/09/21 Kevin add for --->	這一行是將MARK1設定為追蹤
             mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM ON");                                       //2022/09/21 Kevin add for --->	這一行是設定Search Range(ON)
-
             TDR_wait_done("*OPC?");
+
+
+
+
 
 
             //TRACE 6 MARK1 Setting     
