@@ -1649,6 +1649,7 @@ namespace USB4._0_Automation
 
             //TRACE 1 MutiSearch MAX
             mbSession_E5071C.RawIO.Write(":CALC1:PAR1:SEL");
+            mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM:COUP OFF");                         // Couple OFF  ~1.search range ON 2.Coup OFF 3.MaRKER 
             mbSession_E5071C.RawIO.Write(":CALC1: MARK: FUNC: DOM ON");                            //Search Range 開關~得先選擇為ACT
             TDR_wait_done("*OPC?");
             mbSession_E5071C_tdr.RawIO.Write(":CALC1:MARK1:ACT");
@@ -1660,7 +1661,9 @@ namespace USB4._0_Automation
             mbSession_E5071C.RawIO.Write(":CALC1:TRAC1:MARK1:FUNC:DOM:MULT:STAR 1,1e-9");
             mbSession_E5071C.RawIO.Write(":CALC1:TRAC1:MARK1:FUNC:DOM:MULT:STOP 1,9.87e-9");
             mbSession_E5071C.RawIO.Write(":CALC1:TRAC1:MARK1:FUNC:TRAC ON");
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM ON");
+            mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM ON");                           //Search Range   ON  // TONY:Search range ON / Couple OFF  soon
+            
+
             mbSession_E5071C.RawIO.Write(":CALC1:MARK1:FUNC:EXEC");
             wait_done("*OPC?");
 
