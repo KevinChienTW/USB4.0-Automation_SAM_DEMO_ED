@@ -943,43 +943,46 @@ namespace USB4._0_Automation
                 mbSession_E5071C.RawIO.Write(":MMEM:LOAD \"D:\\CAMS_STA\\B3\\" + switch_ports + ".STA\"");
                 wait_done("*OPC?");
 
+                //kevin 20230204_1941 BUG FIXED DD
+                /////    keivn test -s
 
                 if (switch_ports == "1F,3F,2F,4F")   //kevin 20230204_1941 BUG FIXED DD
                 {
                     mbSession_E5071C.RawIO.Write(":DISP:WIND1:ACT");  //設定左邊視窗為啟動的
                     mbSession_E5071C.RawIO.Write(":DISP:WIND1:MAX OFF");
                     //mbSession_E5071C_tdr.RawIO.Write(":CALC:ATR:ACT 3");
-
+                    TDR_wait_done("*OPC?");
                     TDR_Query_response_value(":CALC1:TRAC3:PAR?", "\"Tdd21\"\n");                                   //TDR/TDT --> Parameters
                     TDR_Query_response_value(":CALC1:TRAC3:FORM?", "VOLT\n");                                        //TDR/TDT --> Parameters --> Format
                     mbSession_E5071C.RawIO.Write(":CALC1:PAR3:SEL");
-                   // mbSession_E5071C_tdr.RawIO.Write(":CALC1:MARK2 OFF");
-                    mbSession_E5071C.RawIO.Write(":CALC1:MARK2 OFF");
-
+                    // mbSession_E5071C_tdr.RawIO.Write(":CALC1:MARK2 OFF");
+                    //mbSession_E5071C.RawIO.Write(":CALC1:MARK2 OFF");
+                    TDR_wait_done("*OPC?");
                     mbSession_E5071C_tdr.RawIO.Write(":CALC:TRAC1:TIME:STEP:RTIM:THR T2_8");                          //TDR/TDT --> Rise Time --> 20%-80%
                     mbSession_E5071C_tdr.RawIO.Write(":CALC:TRAC1:TIME:STEP:RTIM:DATA 400e-12");                      //TDR/TDT --> Rise Time --> 400p Sec
-
+                    TDR_wait_done("*OPC?");
                     mbSession_E5071C_tdr.RawIO.Write(":CALC:TRAC5:TIME:STEP:RTIM:THR T2_8");                          //TDR/TDT --> Rise Time --> 20%-80%
                     mbSession_E5071C_tdr.RawIO.Write(":CALC:TRAC5:TIME:STEP:RTIM:DATA 400e-12");                      //TDR/TDT --> Rise Time --> 400p Sec
 
-                    
+                    TDR_wait_done("*OPC?");
                 }
                 else  // 修正SS的BUG    kevin 20230204_1941 BUG FIXED SS
                 {
                     mbSession_E5071C.RawIO.Write(":DISP:WIND1:ACT");  //設定左邊視窗為啟動的
-                    mbSession_E5071C.RawIO.Write(":DISP:WIND1:MAX OFF");
+                    //mbSession_E5071C.RawIO.Write(":DISP:WIND1:MAX OFF");
+                    mbSession_E5071C_tdr.RawIO.Write(":DISP:WIND1:MAX OFF");
                     mbSession_E5071C_tdr.RawIO.Write(":CALC:ATR:ACT 1");
-
+                    TDR_wait_done("*OPC?");
 
                     TDR_Query_response_value(":CALC1:TRAC9:PAR?", "\"T22\"\n");                                   //TDR/TDT --> Parameters
                     TDR_Query_response_value(":CALC1:TRAC9:FORM?", "IMP\n");                                        //TDR/TDT --> Parameters --> Format
+                    TDR_wait_done("*OPC?");
                     TDR_Query_response_value(":CALC1:TRAC10:PAR?", "\"T44\"\n");                                   //TDR/TDT --> Parameters
                     TDR_Query_response_value(":CALC1:TRAC10:FORM?", "IMP\n");                                        //TDR/TDT --> Parameters --> Format
-
+                    TDR_wait_done("*OPC?");
                 }
-                    //kevin 20230204_1941 BUG FIXED DD
 
-                /////    keivn test -s
+
                 ///
                 //DateTime zero = DateTime.Now;
                 //Console.WriteLine("Load STA = ", zero - T0);
