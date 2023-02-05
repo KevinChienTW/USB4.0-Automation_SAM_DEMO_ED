@@ -1350,73 +1350,144 @@ namespace USB4._0_Automation
 
             //TRACE 3 MutiSearch MAX
             mbSession_E5071C.RawIO.Write(":CALC1:PAR3:SEL");
-            TDR_wait_done("*OPC?");
+
+            //KEIVN TEST  - S
+            //mbSession_E5071C.RawIO.Write("CALC1: MARK2: FUNC: DOM: MULT: RANG 2");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:DOM:MULT:STAR 2,520e-12");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:DOM:MULT:STOP 2,850e-12");
+
+            //mbSession_E5071C_tdr.RawIO.Write(":CALC1:MARK1:ACT");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1 ON");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:TYPE MAX");
+
+            //TRACE  3
+            mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM:COUP OFF");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:DOM:MULT:RANG 2");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:DOM:MULT:STAR 2,520e-12");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:DOM:MULT:STOP 2,850e-12");
+            wait_done("*OPC?");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK2 ON");
+            wait_done("*OPC?");
+
             mbSession_E5071C_tdr.RawIO.Write(":CALC1:MARK1:ACT");
             mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1 ON");
             mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:TYPE MAX");
-            wait_done("*OPC?");
-            mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:DOM:MULT ON");
-            mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:DOM:MULT:RANG 1");
-            mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:DOM:MULT:STAR 1,520e-12");
-            mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:DOM:MULT:STOP 1,850e-12");
-            mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:TRAC ON");
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM ON");
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK1:FUNC:EXEC");
-            wait_done("*OPC?");
 
-            //TRACE 3 MutiSearch Min
+            wait_done("*OPC?");
+            mbSession_E5071C.RawIO.Write(":CALC1:PAR3:SEL");
+            mbSession_E5071C_tdr.RawIO.Write(":CALC1:MARK2:ACT");
             mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK2 ON");
             mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK2:FUNC:TYPE MIN");
-            wait_done("*OPC?");
-            mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK2:FUNC:DOM:MULT ON");
-            mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK2:FUNC:DOM:MULT:RANG 1");
-            mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK2:FUNC:DOM:MULT:STAR 1,520e-12");
-            mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK2:FUNC:DOM:MULT:STOP 1,850e-12");
             mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK2:FUNC:TRAC ON");
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM ON");
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK2:FUNC:EXEC");
+
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK2:FUNC:DOM:MULT:RANG 2");
             wait_done("*OPC?");
 
 
 
-            //TRACE 7 MutiSearch MAX
-            mbSession_E5071C.RawIO.Write(":CALC1:PAR7:SEL");
-            TDR_wait_done("*OPC?");
+            //TRACE  7          將3的指令拷貝到7
+            mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM:COUP OFF");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK1:FUNC:DOM:MULT:RANG 2");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK1:FUNC:DOM:MULT:STAR 2,520e-12");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK1:FUNC:DOM:MULT:STOP 2,850e-12");
+
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK1:FUNC:TRAC ON");      
+
+            wait_done("*OPC?");
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK2 ON");
+            wait_done("*OPC?");
+
             mbSession_E5071C_tdr.RawIO.Write(":CALC1:MARK1:ACT");
             mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK1 ON");
             mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK1:FUNC:TYPE MAX");
-            wait_done("*OPC?");
-            mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK1:FUNC:DOM:MULT ON");
-            mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK1:FUNC:DOM:MULT:RANG 1");
-            mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK1:FUNC:DOM:MULT:STAR 1,520e-12");
-            mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK1:FUNC:DOM:MULT:STOP 1,850e-12");
-            mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK1:FUNC:TRAC ON");
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM ON");
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK1:FUNC:EXEC");
-            wait_done("*OPC?");
 
-            //TRACE 7 MutiSearch Min
+            wait_done("*OPC?");
+            mbSession_E5071C.RawIO.Write(":CALC1:PAR7:SEL");
+            mbSession_E5071C_tdr.RawIO.Write(":CALC1:MARK2:ACT");
             mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK2 ON");
             mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK2:FUNC:TYPE MIN");
-            wait_done("*OPC?");
-            mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK2:FUNC:DOM:MULT ON");
-            mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK2:FUNC:DOM:MULT:RANG 1");
-            mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK2:FUNC:DOM:MULT:STAR 1,1.5e-9");
-            mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK2:FUNC:DOM:MULT:STOP 1,3e-9");
             mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK2:FUNC:TRAC ON");
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM ON");
-            mbSession_E5071C.RawIO.Write(":CALC1:MARK2:FUNC:EXEC");
+
+            mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK2:FUNC:DOM:MULT:RANG 2");
             wait_done("*OPC?");
 
+            //mbSession_E5071C_tdr.RawIO.Write(":CALC1:MARK1:ACT");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1 ON");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:TYPE MAX");
+            //wait_done("*OPC?");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:DOM:MULT ON");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:DOM:MULT:RANG 1");
+
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:DOM:MULT:STAR 1,1.5e-9");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:DOM:MULT:STOP 1,3e-9");
+
+            //KEVIN TEST   - E
+            //mbSession_E5071C_tdr.RawIO.Write(":CALC1:MARK1:ACT");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1 ON");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:TYPE MAX");
+            //wait_done("*OPC?");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:DOM:MULT ON");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:DOM:MULT:RANG 1");
+
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:DOM:MULT:STAR 1,1.5e-9");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:DOM:MULT:STOP 1,3e-9");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:DOM:MULT:RANG 2");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:DOM:MULT:STAR 1,520e-12");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:DOM:MULT:STOP 1,850e-12");
+
+            //TDR_wait_done("*OPC?");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK1:FUNC:TRAC ON");
+            //mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM ON");
+            //mbSession_E5071C.RawIO.Write(":CALC1:MARK1:FUNC:EXEC");
+            wait_done("*OPC?");
+
+            ////TRACE 3 MutiSearch Min
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK2 ON");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK2:FUNC:TYPE MIN");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK2:FUNC:DOM:MULT ON");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK2:FUNC:DOM:MULT:RANG 1");
+            //TDR_wait_done("*OPC?");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK2:FUNC:DOM:MULT:STAR 1,520e-12");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK2:FUNC:DOM:MULT:STOP 1,850e-12");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK2:FUNC:TRAC ON");
+            //mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM ON");
+            //mbSession_E5071C.RawIO.Write(":CALC1:MARK2:FUNC:EXEC");
+            //wait_done("*OPC?");
 
 
+            ////TRACE 7 MutiSearch MAX
+            //mbSession_E5071C.RawIO.Write(":CALC1:PAR7:SEL");
+            //TDR_wait_done("*OPC?");
+            //mbSession_E5071C_tdr.RawIO.Write(":CALC1:MARK1:ACT");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK1 ON");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK1:FUNC:TYPE MAX");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK1:FUNC:DOM:MULT ON");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK1:FUNC:DOM:MULT:RANG 1");
+            //TDR_wait_done("*OPC?");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK1:FUNC:DOM:MULT:STAR 1,520e-12");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK1:FUNC:DOM:MULT:STOP 1,850e-12");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK1:FUNC:TRAC ON");
+            //mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM ON");
+            //mbSession_E5071C.RawIO.Write(":CALC1:MARK1:FUNC:EXEC");
+            //wait_done("*OPC?");
 
-
+            ////TRACE 7 MutiSearch Min
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK2 ON");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK2:FUNC:TYPE MIN");
+            //wait_done("*OPC?");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK2:FUNC:DOM:MULT ON");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK2:FUNC:DOM:MULT:RANG 1");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK2:FUNC:DOM:MULT:STAR 1,1.5e-9");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK2:FUNC:DOM:MULT:STOP 1,3e-9");
+            //TDR_wait_done("*OPC?");
+            //mbSession_E5071C.RawIO.Write(":CALC1:TRAC7:MARK2:FUNC:TRAC ON");
+            //mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM ON");
+            //mbSession_E5071C.RawIO.Write(":CALC1:MARK2:FUNC:EXEC");
+            //wait_done("*OPC?");
 
 
             mbSession_E5071C.RawIO.Write(":SYST:BEEP:COMP:STAT OFF");  // BZ  Off
             mbSession_E5071C.RawIO.Write(":SYST:BEEP:WARN:STAT OFF");  // WAR OFF
-
 
             mbSession_E5071C.RawIO.Write(":CALC1:PAR5:SEL");
             mbSession_E5071C.RawIO.Write(":DISP:WIND1:MAX ON");

@@ -955,8 +955,8 @@ namespace USB4._0_Automation
                     TDR_Query_response_value(":CALC1:TRAC3:PAR?", "\"Tdd21\"\n");                                   //TDR/TDT --> Parameters
                     TDR_Query_response_value(":CALC1:TRAC3:FORM?", "VOLT\n");                                        //TDR/TDT --> Parameters --> Format
                     mbSession_E5071C.RawIO.Write(":CALC1:PAR3:SEL");
-                    // mbSession_E5071C_tdr.RawIO.Write(":CALC1:MARK2 OFF");
-                    //mbSession_E5071C.RawIO.Write(":CALC1:MARK2 OFF");
+                     mbSession_E5071C_tdr.RawIO.Write(":CALC1:MARK2 OFF");
+                    mbSession_E5071C.RawIO.Write(":CALC1:MARK2 OFF");
                     TDR_wait_done("*OPC?");
                     mbSession_E5071C_tdr.RawIO.Write(":CALC:TRAC1:TIME:STEP:RTIM:THR T2_8");                          //TDR/TDT --> Rise Time --> 20%-80%
                     mbSession_E5071C_tdr.RawIO.Write(":CALC:TRAC1:TIME:STEP:RTIM:DATA 400e-12");                      //TDR/TDT --> Rise Time --> 400p Sec
@@ -974,12 +974,18 @@ namespace USB4._0_Automation
                     mbSession_E5071C_tdr.RawIO.Write(":CALC:ATR:ACT 1");
                     TDR_wait_done("*OPC?");
 
+                    mbSession_E5071C.RawIO.Write(":CALC1:PAR9:SEL");
                     TDR_Query_response_value(":CALC1:TRAC9:PAR?", "\"T22\"\n");                                   //TDR/TDT --> Parameters
                     TDR_Query_response_value(":CALC1:TRAC9:FORM?", "IMP\n");                                        //TDR/TDT --> Parameters --> Format
                     TDR_wait_done("*OPC?");
+                    mbSession_E5071C.RawIO.Write(":CALC1:PAR10:SEL");
                     TDR_Query_response_value(":CALC1:TRAC10:PAR?", "\"T44\"\n");                                   //TDR/TDT --> Parameters
                     TDR_Query_response_value(":CALC1:TRAC10:FORM?", "IMP\n");                                        //TDR/TDT --> Parameters --> Format
                     TDR_wait_done("*OPC?");
+
+
+
+
                 }
 
 
@@ -1011,8 +1017,8 @@ namespace USB4._0_Automation
                     mbSession_E5071C.RawIO.Write(":DISP:WIND2:MAX OFF");
                     mbSession_E5071C.RawIO.Write(":DISP:WIND1:ACT");
                     mbSession_E5071C.RawIO.Write(":CALC1:PAR1:SEL");
-                    mbSession_E5071C.RawIO.Write(":MMEM:LOAD:LIM \"D:\\CAMS_Limitline\\" + DD_PS_L + "\"");   // //kevin test Limit _20230204_1728
-                    //mbSession_E5071C.RawIO.Write(":MMEM:LOAD:LIM \"D:\\CAMS_Limitline\\IMP_LIMIT_DD_TR15.CSV\"");
+                    //mbSession_E5071C.RawIO.Write(":MMEM:LOAD:LIM \"D:\\CAMS_Limitline\\" + DD_PS_L + "\"");   
+                    mbSession_E5071C.RawIO.Write(":MMEM:LOAD:LIM \"D:\\CAMS_Limitline\\IMP_LIMIT_SS_TR15.CSV\"");  // //kevin test Limit _20230205_1342  KFIX
                     wait_done("*OPC?");
                     mbSession_E5071C.RawIO.Write(":CALC1:LIM ON");                                                                                                                       //Analysis > Limit Test > Limit Test
                     mbSession_E5071C.RawIO.Write(":CALC1:LIM:DISP ON");                                                                                                                  //Analysis > Limit Test > Limit Line
@@ -1022,7 +1028,7 @@ namespace USB4._0_Automation
 
                     mbSession_E5071C.RawIO.Write(":DISP:WIND1:MAX OFF");
                     mbSession_E5071C.RawIO.Write(":CALC1:PAR5:SEL");
-                    mbSession_E5071C.RawIO.Write(":MMEM:LOAD:LIM \"D:\\CAMS_Limitline\\" + SS_PDI_LL + "\"");
+                    mbSession_E5071C.RawIO.Write(":MMEM:LOAD:LIM \"D:\\CAMS_Limitline\\" + SS_PDI_LL + "\""); //LIMIT LINE OK
                     wait_done("*OPC?");
                     mbSession_E5071C.RawIO.Write(":CALC1:LIM ON");                                                                                                                       //Analysis > Limit Test > Limit Test
                     mbSession_E5071C.RawIO.Write(":CALC1:LIM:DISP ON");                                                                                                                  //Analysis > Limit Test > Limit Line
@@ -1035,7 +1041,7 @@ namespace USB4._0_Automation
                     mbSession_E5071C.RawIO.Write(":DISP:WIND2:MAX OFF");
                     mbSession_E5071C.RawIO.Write(":DISP:WIND1:ACT");
                     mbSession_E5071C.RawIO.Write(":CALC1:PAR4:SEL");
-                    mbSession_E5071C.RawIO.Write(":MMEM:LOAD:LIM \"D:\\CAMS_Limitline\\" + SS_SEI_LL + "\"");
+                    mbSession_E5071C.RawIO.Write(":MMEM:LOAD:LIM \"D:\\CAMS_Limitline\\" + SS_SEI_LL + "\""); //LIMIT OK
                     wait_done("*OPC?");
                     mbSession_E5071C.RawIO.Write(":CALC1:LIM ON");                                                                                                                       //Analysis > Limit Test > Limit Test
                     mbSession_E5071C.RawIO.Write(":CALC1:LIM:DISP ON");                                                                                                                  //Analysis > Limit Test > Limit Line
@@ -1045,7 +1051,7 @@ namespace USB4._0_Automation
 
                     mbSession_E5071C.RawIO.Write(":DISP:WIND1:MAX OFF");
                     mbSession_E5071C.RawIO.Write(":CALC1:PAR8:SEL");
-                    mbSession_E5071C.RawIO.Write(":MMEM:LOAD:LIM \"D:\\CAMS_Limitline\\" + SS_SEI_LL + "\"");
+                    mbSession_E5071C.RawIO.Write(":MMEM:LOAD:LIM \"D:\\CAMS_Limitline\\" + SS_SEI_LL + "\""); //LIMIT OK
                     wait_done("*OPC?");
                     mbSession_E5071C.RawIO.Write(":CALC1:LIM ON");                                                                                                                       //Analysis > Limit Test > Limit Test
                     mbSession_E5071C.RawIO.Write(":CALC1:LIM:DISP ON");                                                                                                                  //Analysis > Limit Test > Limit Line
@@ -1055,7 +1061,7 @@ namespace USB4._0_Automation
 
                     mbSession_E5071C.RawIO.Write(":DISP:WIND1:MAX OFF");
                     mbSession_E5071C.RawIO.Write(":CALC1:PAR9:SEL");
-                    mbSession_E5071C.RawIO.Write(":MMEM:LOAD:LIM \"D:\\CAMS_Limitline\\" + SS_SEI_LL + "\"");
+                    mbSession_E5071C.RawIO.Write(":MMEM:LOAD:LIM \"D:\\CAMS_Limitline\\" + SS_SEI_LL + "\""); //LIMIT OK
                     wait_done("*OPC?");
                     mbSession_E5071C.RawIO.Write(":CALC1:LIM ON");                                                                                                                       //Analysis > Limit Test > Limit Test
                     mbSession_E5071C.RawIO.Write(":CALC1:LIM:DISP ON");                                                                                                                  //Analysis > Limit Test > Limit Line
@@ -1078,7 +1084,7 @@ namespace USB4._0_Automation
                     mbSession_E5071C.RawIO.Write(":DISP:WIND2:MAX OFF");
                     mbSession_E5071C.RawIO.Write(":DISP:WIND1:ACT");
                     mbSession_E5071C.RawIO.Write(":CALC1:PAR3:SEL");
-                    mbSession_E5071C.RawIO.Write(":MMEM:LOAD:LIM \"D:\\CAMS_Limitline\\" + CI_LL + "\"");
+                    mbSession_E5071C.RawIO.Write(":MMEM:LOAD:LIM \"D:\\CAMS_Limitline\\" + CI_LL + "\"");  //LIMIT OK
                     wait_done("*OPC?");
                     mbSession_E5071C.RawIO.Write(":CALC1:LIM ON");                                                                                                                       //Analysis > Limit Test > Limit Test
                     mbSession_E5071C.RawIO.Write(":CALC1:LIM:DISP ON");                                                                                                                  //Analysis > Limit Test > Limit Line
@@ -1102,6 +1108,7 @@ namespace USB4._0_Automation
                     mbSession_E5071C.RawIO.Write(":DISP:WIND1:ACT");
                     mbSession_E5071C.RawIO.Write(":CALC1:PAR2:SEL");
                     mbSession_E5071C.RawIO.Write(":MMEM:LOAD:LIM \"D:\\CAMS_Limitline\\" + SS_SK_L + "\"");
+                    
                     wait_done("*OPC?");
                     mbSession_E5071C.RawIO.Write(":CALC1:LIM ON");                                                                                                                       //Analysis > Limit Test > Limit Test
                     mbSession_E5071C.RawIO.Write(":CALC1:LIM:DISP ON");                                                                                                                  //Analysis > Limit Test > Limit Line
