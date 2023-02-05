@@ -957,6 +957,7 @@ namespace USB4._0_Automation
                     mbSession_E5071C.RawIO.Write(":CALC1:PAR3:SEL");
                      mbSession_E5071C_tdr.RawIO.Write(":CALC1:MARK2 OFF");
                     mbSession_E5071C.RawIO.Write(":CALC1:MARK2 OFF");
+                    mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM OFF");
                     TDR_wait_done("*OPC?");
                     mbSession_E5071C_tdr.RawIO.Write(":CALC:TRAC1:TIME:STEP:RTIM:THR T2_8");                          //TDR/TDT --> Rise Time --> 20%-80%
                     mbSession_E5071C_tdr.RawIO.Write(":CALC:TRAC1:TIME:STEP:RTIM:DATA 400e-12");                      //TDR/TDT --> Rise Time --> 400p Sec
@@ -964,6 +965,7 @@ namespace USB4._0_Automation
                     mbSession_E5071C_tdr.RawIO.Write(":CALC:TRAC5:TIME:STEP:RTIM:THR T2_8");                          //TDR/TDT --> Rise Time --> 20%-80%
                     mbSession_E5071C_tdr.RawIO.Write(":CALC:TRAC5:TIME:STEP:RTIM:DATA 400e-12");                      //TDR/TDT --> Rise Time --> 400p Sec
 
+                    
                     TDR_wait_done("*OPC?");
                 }
                 else  // 修正SS的BUG    kevin 20230204_1941 BUG FIXED SS
@@ -974,20 +976,37 @@ namespace USB4._0_Automation
                     mbSession_E5071C_tdr.RawIO.Write(":CALC:ATR:ACT 1");
                     TDR_wait_done("*OPC?");
 
+                    //mbSession_E5071C.RawIO.Write(":CALC1:PAR9:SEL");
+                    //TDR_Query_response_value(":CALC1:TRAC9:PAR?", "\"T22\"\n");                                   //TDR/TDT --> Parameters
+                    //TDR_Query_response_value(":CALC1:TRAC9:FORM?", "IMP\n");                                        //TDR/TDT --> Parameters --> Format
+                    //TDR_wait_done("*OPC?");
+                    //mbSession_E5071C.RawIO.Write(":CALC1:PAR10:SEL");
+                    //TDR_Query_response_value(":CALC1:TRAC10:PAR?", "\"T44\"\n");                                   //TDR/TDT --> Parameters
+                    //TDR_Query_response_value(":CALC1:TRAC10:FORM?", "IMP\n");                                        //TDR/TDT --> Parameters --> Format
+                    //TDR_wait_done("*OPC?");
+
+
                     mbSession_E5071C.RawIO.Write(":CALC1:PAR9:SEL");
-                    TDR_Query_response_value(":CALC1:TRAC9:PAR?", "\"T22\"\n");                                   //TDR/TDT --> Parameters
-                    TDR_Query_response_value(":CALC1:TRAC9:FORM?", "IMP\n");                                        //TDR/TDT --> Parameters --> Format
-                    TDR_wait_done("*OPC?");
+                    TDR_Query_response_string_val(":CALC1:TRAC9:PAR?", "\"T22\"\n");
+                    TDR_Query_response_string_val(":CALC1:TRAC9:FORM?", "IMP\n");
                     mbSession_E5071C.RawIO.Write(":CALC1:PAR10:SEL");
-                    TDR_Query_response_value(":CALC1:TRAC10:PAR?", "\"T44\"\n");                                   //TDR/TDT --> Parameters
-                    TDR_Query_response_value(":CALC1:TRAC10:FORM?", "IMP\n");                                        //TDR/TDT --> Parameters --> Format
-                    TDR_wait_done("*OPC?");
-
-
-
+                    TDR_Query_response_string_val(":CALC1:TRAC10:PAR?", "\"T44\"\n");
+                    TDR_Query_response_string_val(":CALC1:TRAC10:FORM?", "IMP\n");
 
                 }
 
+                void TDR_Query_response_string_val(string command, string parameter)
+                {
+                    string value;
+                    mbSession_E5071C_tdr.RawIO.Write(command);
+                    value = mbSession_E5071C_tdr.RawIO.ReadString();
+                    if (value.ToUpper() != parameter.ToUpper())
+                    {
+                        command = command.Replace("?", " " + parameter.Replace("\n", ""));
+                        mbSession_E5071C_tdr.RawIO.Write(command);
+                        TDR_wait_done("*OPC?");
+                    }
+                }
 
                 ///
                 //DateTime zero = DateTime.Now;
@@ -1028,7 +1047,8 @@ namespace USB4._0_Automation
 
                     mbSession_E5071C.RawIO.Write(":DISP:WIND1:MAX OFF");
                     mbSession_E5071C.RawIO.Write(":CALC1:PAR5:SEL");
-                    mbSession_E5071C.RawIO.Write(":MMEM:LOAD:LIM \"D:\\CAMS_Limitline\\" + SS_PDI_LL + "\""); //LIMIT LINE OK
+                   // mbSession_E5071C.RawIO.Write(":MMEM:LOAD:LIM \"D:\\CAMS_Limitline\\" + SS_PDI_LL + "\""); //LIMIT LINE OK
+                    mbSession_E5071C.RawIO.Write(":MMEM:LOAD:LIM \"D:\\CAMS_Limitline\\IMP_LIMIT_SS_TR15.CSV\"");  // //kevin test Limit _20230205_1342  KFIX
                     wait_done("*OPC?");
                     mbSession_E5071C.RawIO.Write(":CALC1:LIM ON");                                                                                                                       //Analysis > Limit Test > Limit Test
                     mbSession_E5071C.RawIO.Write(":CALC1:LIM:DISP ON");                                                                                                                  //Analysis > Limit Test > Limit Line

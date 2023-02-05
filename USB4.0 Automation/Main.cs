@@ -1381,6 +1381,7 @@ namespace USB4._0_Automation
             mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK2:FUNC:TRAC ON");
 
             mbSession_E5071C.RawIO.Write(":CALC1:TRAC3:MARK2:FUNC:DOM:MULT:RANG 2");
+            mbSession_E5071C.RawIO.Write(":CALC1:MARK:FUNC:DOM OFF");                      //關掉Search Range
             wait_done("*OPC?");
 
 
